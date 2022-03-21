@@ -1,116 +1,104 @@
-#!/usr/bin/env python3
+################################################################
+# Anassas Anderson, James Brooks, Chance Harlon, Clay Hopkins, #
+# Mason Kelley, Patrick McDonald, Johnathon Terry              #
+# CSC 442/542, CYEN 301                                        #
+# Program #2: Vigenere Cipher                                  #
+# March 25, 2022                                               #
+################################################################
 
-####################################################
-# Group Name: Team Horus
-# Group Members: Clay H., Anassas A., Jimmy B., Chance H., Mason K., Patrick M., Johnathon T.
-# Date: March 25, 2022
-# Description: Program #2: Vigener Cipher
-####################################################
+# Import libraries
+import sys # sys is used to take arguments from command line
 
-import sys
+# The vigenere encode method
+def encode(message, key):
+    cipher = ""
+    for i in range(len(message)):
+        messagecode = ord(message[i])
+        keycode = ord(key[i])
+        if keycode > 90:
+            keycode -= 32
+        keycode -= 65
+        keycode = messagecode + keycode
+        if (messagecode >= 65) and (messagecode <= 90):
+            if keycode > 90:
+                keycode -= 90
+                keycode += 64
+            newletter = chr(keycode)
+        elif (messagecode >= 97) and (messagecode <= 122):
+            if keycode > 122:
+                keycode -= 122
+                keycode += 96
+            newletter = chr(keycode)
+        else:
+            newletter = chr(messagecode)
+        cipher = cipher + newletter
+    return cipher
 
-# global variables
-message = ""
-key = ""
-cypher = ""
+# The viginere decode method
+def decode(message, key):
+    cipher = ""
+    for i in range(len(message)):
+        messagecode = ord(message[i])
+        keycode = ord(key[i])
+        if keycode > 90:
+            keycode -= 32
+        keycode -= 65
+        keycode = messagecode - keycode
+        if (messagecode >= 65) and (messagecode <= 90):
+            if keycode < 65:
+                keycode += 90
+                keycode -= 64
+            newletter = chr(keycode)
+        elif (messagecode >= 97) and (messagecode <= 122):
+            if keycode < 97:
+                keycode += 122
+                keycode -= 96
+            newletter = chr(keycode)
+        else:
+            newletter = chr(messagecode)
+        cipher = cipher + newletter
+    return cipher
 
-# this user defined function will take a 'crypt_type'
-#that should either be '-e' or '-d' to determine wether
-#we are encrypting or decrypting our message. Then it will
-#proceed to either decrypt or encrypt the message and print
-#it to the terminal. Note: it encrypts using the formula Ci=(Pi+Ki)%26
-#and decrypts using Pi=(26+Ci-Ki)%26
-def cryption(crypt_type):
-    # declare/setup local variables
-    cypher = ""
-    tmp_i = 0   # counter to keep track where we are in our key
+# Reads a given file and returns its contents as a string
+def readFile(file):
+    pass
 
-    # if we are encrypting then...
-    if crypt_type == "-e":
-        # iterate through our message
-        for p in message:
-            # if we exceeded our key length then cycle back
-            #to the beginning of our key
-            if tmp_i >= len(key):
-                tmp_i = 0
-            k = key[tmp_i]
-            tmp_i += 1
-            
-            # if our message is capital then..
-            if p.isupper():
-                # make our key capital to retain message's lettercase
-                k = k.upper()
-                # use mathematical formula to encrypt message with regards
-                #to uppercase ASCII characters (ie p-65)
-                #Note: chr() converts a decimal to ASCII character and
-                #ord() converts ASCII character to a decimal
-                cypher += chr(65 + (ord(p) - 65 + ord(k) - 65) % 26)
+# Writes a given string to a given file
+def writeFile(file, result):
+    pass
 
-            # otherwise if our message is lowercase then..
-            elif p.islower():
-                # make our key lowercase to retain message's lettercase
-                k = k.lower()
-                # use mathematical formula to encrypt message with regards
-                #to lowercase ASCII characters (ie p-97)
-                cypher += chr(97 + (ord(p) - 97 + ord(k) - 97) % 26)
+############################
+# Main Part of the Program #
+############################
+    
+args = sys.argv
+mode = args[1]
+key = args[2]
+key = key.replace(" ", "")
 
-            # otherwise p in message is not a letter A-Z or a-z
-            #so ignore it and continue to the next character
-            else:
-                tmp_i -= 1
-                cypher += p
-                continue
+if len(args) == 3:
+    if mode == "-e":
+        message = input("")
+        result = encode(message, key)
+    elif mode == "-d":
+        message = input()
+        result = decode(message, key)
+    print(result)
 
-        # print encrypted message to terminal
-        print(cypher)
-
-    # otherwise if we are decrypting our message then...
-    elif crypt_type == "-d":
-        # iterate through our message
-        for c in message:
-            # if we exceeded our key length then cyble back
-            #to the beginning of our key
-            if tmp_i >= len(key):
-                tmp_i = 0
-            k = key[tmp_i]
-            tmp_i += 1
-
-            # if our message is capital then..
-            if c.isupper():
-                # make our key capital to retain message's lettercase
-                k = k.upper()
-                # use mathematical formula to decrypt message with regards
-                #to uppercase ASCII characters (ie c-65)
-                cypher += chr(65 + (26 + (ord(c) - 65 - (ord(k) - 65))) % 26)
-
-            # otherwise if our message is lowercase then..
-            elif c.islower():
-                # make our key lowercase to retain message's lettercase
-                k = k.lower()
-                # use mathematical formula to decrypt message with regards
-                #to lowercase ASCII characters (ie c-97)
-                cypher += chr(97 + (26 + ord(c) - 97 - (ord(k) - 97)) % 26)
-            
-            # otherwise c in message is not a letter A-z or a-z
-            #so ignore it and continue to the next character
-            else:
-                tmp_i -= 1
-                cypher += c
-                continue
-
-        # print decrypted message to terminal
-        print(cypher)
-
-# main code here
-# if atleast 2 args given
-if len(sys.argv) > 2:
-    # get input from terminal
-    for line in sys.stdin:
-        message += line
-
-    # strip() gets rid of any unwanted newlines or
-    #spaces in the message
-    message = message.strip()
-    key = sys.argv[2]               # key will be second arg given
-    key = key.replace(" ", "")      # remove spaces in key
-    cryption(sys.argv[1])           # call cryption function
+elif len(args) == 5:
+    direction = args[3]
+    file = args[4]
+    if direction == "<":
+        message = readFile(file)
+        if mode == "-e":
+            result = encode(message, key)
+        elif mode == "-d":
+            result = decode(message, key)
+        print(result)
+    elif direction == ">":
+        message = input()
+        if mode == "-e":
+            result = encode(message, key)
+        elif mode == "-d":
+            result = decode(message, key)
+        writeFile(file, result)
