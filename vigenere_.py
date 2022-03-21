@@ -102,15 +102,38 @@ def cryption(crypt_type):
         print(cypher)
 
 # main code here
-# if atleast 2 args given
+# if atleast 3 args given
 if len(sys.argv) > 2:
-    # get input from terminal
-    for line in sys.stdin:
-        message += line
+    # if we are getting input from user
+    if sys.stdin.isatty():
+        # infinite loop until ctrl+d is pressed
+        while 1:
+            # get input from terminal
+            try:
+                message = input()
 
-    # strip() gets rid of any unwanted newlines or
-    #spaces in the message
-    message = message.strip()
-    key = sys.argv[2]               # key will be second arg given
-    key = key.replace(" ", "")      # remove spaces in key
-    cryption(sys.argv[1])           # call cryption function
+            # if ctrl+d is pressed it raises an error
+            #with input() so we manually handle it
+            #and just break out of the while loop
+            except:
+                break
+            
+            # strip() gets rid of any unwanted newlines or
+            #spaces in the message
+            message = message.strip()
+            key = sys.argv[2]               # key will be second arg given
+            key = key.replace(" ", "")      # remove spaces in key
+            cryption(sys.argv[1])           # call cryption function
+    
+    # otherwise we are getting input from a file
+    else:
+        # get input from terminal
+        for line in sys.stdin:
+            message += line
+
+        # strip() gets rid of any unwanted newlines or
+        #spaces in the message
+        message = message.strip()
+        key = sys.argv[2]               # key will be second arg given
+        key = key.replace(" ", "")      # remove spaces in key
+        cryption(sys.argv[1])           # call cryption function
