@@ -146,18 +146,24 @@ if len(args) == 3:
     # Run encode if mode is -e
     if mode == "-e":
         while True: # While loop should break with ctrl+D (^D). Ctrl+C will probably work too.
-            # Get the message as an input from the user
-            message = input()
-            result = encode(message, key)
-            print(result) # Print the result to command line
+            try:
+                # Get the message as an input from the user
+                message = input()
+                result = encode(message, key)
+                print(result) # Print the result to command line
+            except:
+                break # When ctrl+D is used
 
     # Run decode if mode is -d
     elif mode == "-d":
         while True: # While loop should break with ctrl+D (^D). Ctrl+C will probably work too.
-            # Get the message as input from the user
-            message = input()
-            result = decode(message, key)
-            print(result) # Print the result to command line
+            try:
+                # Get the message as input from the user
+                message = input()
+                result = decode(message, key)
+                print(result) # Print the result to command line
+            except:
+                break # When ctrl+D is used
 
 # If 5 (4) arguments are given
 elif len(args) == 5:
