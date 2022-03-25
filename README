@@ -1,1 +1,50 @@
+############################################################################
+# TEAM HORUS: Anassas Anderson, James Brooks, Chance Harlon, Clay Hopkins, #
+#		Mason Kelly, Patrick McDonald, Johnathon Terry		   #
+# CLASS: CSC 442/542, CYEN 301						   #	
+# PROJECT: Programming Assignment 1: Binary Decoder and Vigenere Cipher    #
+############################################################################
 
+
+##########
+# README #
+##########
+
+
+###################
+# BINARY DECODER  #
+###################
+
+# Execution Syntax: ~$ python binary.py < <filename.txt> 
+	--"filename.txt" is a binary string
+
+###################
+# Functionality
+###################
+
+	The binary decoder takes file input from the command line then strips any
+	spaces before filtering by 7, 8, or both 7 and 8 bits. The binary is converted 
+	into ASCII integers and added to a list, which is then converted into the decrypted
+	alphanumeric strings.
+
+
+###################
+# Vigenere Cipher #
+###################
+
+# Execution Syntax: ~$ python vigenere.py <FLAG> <"key_string">
+	--Flags:
+		"-e" for encrypting plaintext
+		"-d" for decrypting ciphertext
+
+	--"key_string" will be a string of users choice to be used for encryption
+
+###################	
+# Functionality
+###################
+
+	The Vignere Cipher takes a flag and string input used as a key to both encrypt and 
+	decrypt text. If output is not redirected to a text file, the results will appear in
+	the command line. When the "-e" flag is used output can be redirected to a text file.
+	When the "-d" flag is used ciphertext can be used as input for the program which will
+	read the file and assign it's contents to a variable before decrypting.
