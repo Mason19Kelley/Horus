@@ -48,3 +48,14 @@
 	the command line. When the "-e" flag is used output can be redirected to a text file.
 	When the "-d" flag is used ciphertext can be used as input for the program which will
 	read the file and assign it's contents to a variable before decrypting.
+	
+###################
+#    INFECTION    #
+###################
+
+	The Infection.txt algorithm is called a fork bomb (this is written in C) that uses the system() 
+	function to recursively	call itself via system arguments. It does this inside an infinite for 
+	loop, constantly creating new processes. Computers have a limit to how many processes they can 
+	run at a certain time, so the constant creation of processes consumes the machine's resources, 
+	which leads to slow/sluggish response eventually leading to a hard freeze/crash. The code was
+	tested in a Linux environment.
