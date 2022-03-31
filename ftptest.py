@@ -41,7 +41,7 @@ files = [[i.split()[8],i.split()[0]] for i in files]
 files.sort()
 files = [i[1] for i in files]
 
-# remove unneeded values if only looking at 7 bits
+# remove unneeded values if only looking at 7 bits or join 10 bit values
 if METHOD == 7:
 	files = [i for i in files if i[0:3] == "---"]
 elif METHOD == 10:
