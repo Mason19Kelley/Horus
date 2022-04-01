@@ -1,5 +1,12 @@
 from ftplib import FTP
 
+####################################################
+# Group Name: Team Horus
+# Group Members: Clay H., Anassas A., Jimmy B., Chance H., Mason K., Patrick M., Johnathon T.
+# Date: March 25, 2022
+# Description: Program #1: Binary Decoder
+####################################################
+
 # default global variables
 IP = "138.47.99.64"
 PORT = 21
