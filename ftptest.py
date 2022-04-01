@@ -1,5 +1,6 @@
 from ftplib import FTP
 
+# default global variables
 IP = "138.47.99.64"
 PORT = 21
 USER = "anonymous"
@@ -9,13 +10,14 @@ USE_PASSIVE = True
 METHOD = 10
 
 
+# ftp connection methods
 ftp = FTP()
 ftp.connect(IP, PORT)
 ftp.login(USER, PASSWORD)
 ftp.set_pasv(USE_PASSIVE)
 
 
-
+# changes pwd in ftp server to correct directory depending on METHOD var
 ftp.cwd(FOLDER)
 if METHOD == 7:
 	ftp.cwd("7")
@@ -50,7 +52,7 @@ elif METHOD == 10:
 # converts each string of perms to binary
 files = list(map(perm2bin, files))
 
-
+# if using 10 bit method, divide up the bits into 7 bit increments
 if METHOD == 10:
 	files = [files[7*x:7*(x+1)] for x in range(len(files)//7)]
 	for i,v in enumerate(files):
